@@ -57,8 +57,8 @@
 
 
 \abstract{
-This paper studies models of ecosystems viewed as collections of interacting living (animals, plants, \ldots) and nonliving entities (air, water, soil, \ldots), whose conditions of appearance/disappearance are controlled by  sets of rules. 
-We present a rule-based method allowing to automatically detect patterns (i.e., ecological processes) in ecosystems. The method relies on a measure of similarity and on an optimization algorithm. 
+This paper studies discrete models of ecosystems viewed as collections of interacting living (animals, plants\ldots ) and nonliving entities (air, water, soil\ldots ), whose conditions of appearance/disappearance are controlled by a set of formal rules (i.e. processes). In ecology, it remains today a challenge to identify indirect interactions at play in ecosystem responses. 
+We present a rule-based method allowing to automatically detect patterns (i.e., ecological processes or sets of processes) in  ecosystem. The method relies on a measure of similarity and on an optimization algorithm. 
 }
 
 \onecolumn \maketitle \normalsize \vfill
@@ -70,55 +70,54 @@ The dynamics of such systems is difficult to grasp as it is the result of an int
 In addition, all these entities and processes are influenced and often highly impacted by human activities. 
 %
 Understanding the functioning of ecosystems is, thus, crucial for a more sustainable management of them. 
-Unfortunately, in practice, the study and management models of ecosystems are difficult. 
+Unfortunately, in practice, the study and management models of ecosystems remain a challenge. 
 They are usually developed on a case-by-case basis due to the large number and continuous nature of variables. 
-Here is a critical bottleneck, as we face today fast and dangerous changes of most ecosystems (due to climate change, impacting human activities, etc.) that we are compelled to understand so to properly react.
+Here is a critical bottleneck, as we face today fast and dangerous changes of most ecosystems (due to climate change, to human activities\ldots ) that we are compelled to understand so to appropriately react.
 
-One way of improving our understanding of ecosystems functioning  is to provide more formal frameworks. 
+One relevant way of improving our understanding of ecosystems functioning  is to provide more formal frameworks. 
 They have proven to be valuable for speeding up and better controlling the decision procedures. 
 %	
 Similarly to what happens in biology, ordinary differential equations (ODE) are the dominant modeling methodology for ecosystems \cite{may72, Lotka1925}. 
 The drawbacks of such  models are that: i) they usually need to quantify various parameters (mostly unknown). ii) They are not able to faithfully represent the time scale required for observation of ecological processes which is usually large. 
 iii) On top of this,   analytic solutions usually do not exist and models often represent averaged and sometimes unrealistic behaviors of ecosystems. 
-In contrast, while discrete models are high level abstractions of real life processes, they allow unraveling the tangled causal relationships between system's entities. 
+In contrast, while discrete models are high level abstractions of observed processes, they allow unraveling the tangled causal relationships between system's entities (i.e. material constitutive components). 
 The success of discrete approaches is witnessed, for instance,  in systems biology with formalisms like Petri
  nets~\cite{DBLP:journals/nc/BaldanCMS10}, Boolean networks~\cite{thomas1973boolean},
  process algebras~\cite{journals/tcsb/Cardelli05} and rewriting systems~\cite{giavitto04a}, to cite a few. 
 
-%HK à relire
 In ecology, discrete modelling is still pioneering and under exploited. 
 Approaches such as \cite{gaucherel2012,gaucherel2014}, where the authors study the driving rules needed to change agricultural mosaics and model contrasted landscapes, are promising. However, much more may be obtained
 by developing original solutions based on the suitable application of existing theory and associated (automated) tools. 
 One of the goals of this paper is to contribute in this regard. 
 
-As a starting point of our developments we take a general discrete formalism proposed in   \cite{pommereau-gaucherel2017}. Ecosystems are modeled qualitatively as a set of (living and nonliving) entities together with a set of rewriting rules expressing the conditions of their appearance/disappearance (\ie the ecosystem component behaviors).  
+As a starting point of our developments we take a general discrete formalism proposed in   \cite{pommereau-gaucherel2017}. Ecosystems are modeled qualitatively as a set of (living and nonliving) entities together with a set of rewriting rules expressing the conditions of their appearance/disappearance (\ie the ecosystem component responses).  
 These rules  may be interpreted as the functioning bricks of landscape modelling. 
-Each rule is, thus, part of a broader process describing the behavior of the full ecosystem. 
+Each rule is, thus, part of a broader process describing the behavior of the whole ecosystem. 
 
-It is known that there are processes that are common to several ecosystems: \eg predation, competition, symbiosis, etc. and it is important to be able to identify them. In other words we can raise the following questions: how can we discover if a process is present in an ecosystem? is the introduction of a new entity causing the appearance of a known process? 
-Indeed, discovering wanted or unwanted interaction patterns would guide decisions for taking actions according to the managing objectives, such as  preventing or reinforcing some ecosystemic functioning. 
+Yet, there are processes that are common to several ecosystems: \eg --for species interactions-- predation, competition, symbiosis\ldots and it is crucial to be able to identify them to qualify the ecosystem under study. Hence, we can raise the following questions: How can we detect whether a process is present in an ecosystem? Is the introduction of a new entity causing the appearance of a known process? 
+Indeed, to detect wanted or unwanted interaction patterns would guide decisions for taking actions according to the management objectives, such as preventing or reinforcing some ecosystemic processes or states. 
 Identify ecological processes or  \emph{interaction patterns} --in a more computer science oriented terminology--  by employing classical graph-theoretical methods on the state space is ineffective. 
-Indeed, in realistic models, the ecosystem's dynamics usually leads to huge state spaces (often hundreds of thousands states). 
-However, we can  search for  patterns only referring to the syntactical systems specification as it turns out that similar processes look similar at the rule level.  
+Indeed, in realistic ecosystem models, the modeled dynamics usually leads to huge state spaces (often hundreds of thousands states). 
+It is more efficient to search for patterns by referring only to the (limited) syntactical system specification as similar processes look similar at the rule level.  
 
 From a more general point of view, a pattern search corresponds to a variant of the  problem of assessing the similarity between models of ecosystems. 
 %
 In order to compare two qualitative models of ecosystems, we introduce a pair of mappings, the first identifying entities and the latter rules, and a similarity measure expressed as a scoring function.  
 This scoring majors the number of matched entities and rules, and penalizes those that do not perfectly match. 
 Similarity is then defined as an optimization problem through the scoring function. The definition of the scoring function is used to search for interaction patterns in the rule-based models of ecosystems. 
-As the complexity of this kind of search is exponential, it is not always possible in realistic cases to find optimal solutions. 
+As the complexity of this kind of search is exponential, it is not always possible in realistic cases to find optimal solutions in a reasonable time. 
 Nevertheless, optimization tools generally allow obtaining a sub-optimal solution quite efficiently, solutions that can then be refined. 
 
 We implemented a prototype that allows encoding the matching of two models into a pseudo-Boolean optimization problem and calling tool Sat4j~\cite{sat4j} to solve it. 
-We applied this prototype to systematically match a collection of interaction patterns against a set of models of ecosystems coming from various sources. 
+We applied this prototype to systematically match a collection of predefined interaction patterns against a set of models of ecosystems coming from various sources. 
  
 The paper is structured as follows: Section \ref{sec:ecosystems} introduces the formal modeling of ecosystems we have used and presents running examples. Section \ref{sec:similarity} defines similarity measures used to compare ecosystems and discusses possible extensions of them. 
 Several comparisons between ecosystems are used as illustrations for the scoring function.
-In Section \ref{sec:experiments}, we present the results of our main case study: a research of interaction patterns in realistic ecosystems. %CG 
+In Section \ref{sec:experiments}, we present the results of our main case study: a search of interaction patterns in realistic ecosystems. 
 Section \ref{sec:related} is devoted to an overview of related work, while some concluding remarks and perspectives are presented in Section \ref{sec:conclusion}.  
 
 
-\section{\uppercase{Ecosystems}}
+\section{\uppercase{Modeled Ecosystems}}
 \label{sec:ecosystems}
 In this section, we recall the formal definition of a model of an ecosystem as given in \cite{pommereau-gaucherel2017}. 
 An ecosystem consists in a set of \emph{entities} \E that can be present (\On) or absent (\Off). We assume that no entity may be simultaneously \On and \Off. The status (the presence) of an entity $a$ is called polarity, we use $a+$ to denote that $a$ is \On, $a-$ to denote that $a$ is \Off. The set of entities $\E$ with polarities $\mathsf{p} \in \{+,-\}$ is $\Ap= \{a+, a- \mid a \in \E\}.$ 
@@ -137,6 +136,7 @@ $\alpha^+$ and $\omega^+$ are sets of entities that are \On, and
 $\alpha^-$ and $\omega^-$ are sets of entities that are \Off.
 \end{itemize}
 \end{definition}
+% CG: Usually, with Franck, we define initial conditions too. I guess it is not necessary here for your manipulation??  
 
 We denote by $\lhs{r}$ (respectively $\rhs{r}$) the set of entities in the left (respectively right) hand side of the rule $r$. 
 
@@ -280,7 +280,7 @@ Intuitively, we express it in terms of how many  groups of components with the s
 %HK c'est expliqué intuitivement dans la phrase plus bas :
 This means that, given two mappings, between entities and rules respectively, 
 the similarity rate is defined as the number of mapped entities plus how many mapped entities the rules have in common. 
-More precisely, let $\RR_1 = \rsys{\E_1}{\Ru_1}$ and $\RR_2 =
+More formally, let $\RR_1 = \rsys{\E_1}{\Ru_1}$ and $\RR_2 =
 \rsys{\E_2}{\Ru_2}$ be two ecosystems, and \mapcomp and \maprule be two mappings between entities and rules respectively.
 The first one is $\mapcomp : \E^p_1 \to \E^p_2.$
 %this means that, for instance, $a+ \in \E^p_1$ could be mapped into either $b+$ or $c-$  for  $b+,c- \in  \E^p_2$.  
@@ -665,8 +665,8 @@ The first match is more arbitrary and as expected its score is also the lowest a
 \section{\uppercase{Experiment: searching patterns into models of ecosystems}}
 \label{sec:experiments}
 
-In order to evaluate how practical our matching method is, we have implemented a prototype tool and used it to search patterns into models of ecosystems.
-Both patterns and models are originated from previous works involving  real ecosystem modeling.
+In order to evaluate how practical our matching method is, we have implemented a prototype tool and used it to search patterns into various models of ecosystems.
+Both patterns and models are originated from previous works involving  realistic ecosystem modeling.
 This tool performs the following steps that use the definition of scoring function given above:
 %
 \begin{enumerate}
@@ -680,14 +680,14 @@ This tool performs the following steps that use the definition of scoring functi
 %
 As  PBO solver, we have used Sat4j that appears to be quite fast and can be interrupted during its computation, in which case it proposes the best solution found so far.
 This is a very nice feature considering that searching for an optimal solution may be very long while non-optimal solutions may already correspond to interesting matches for the modeler.
-The prototype itself was implemented in Python using SymPy~\cite{sympy} to build the scoring function in the most natural way (\ie as defined in the paper) and simplify it latter to match the constraints of PBO format.
+The prototype itself was implemented in Python using SymPy~\cite{sympy} to build the scoring function in the most natural way (\ie as defined in the paper), and simplify it latter to match the constraints of PBO format.
 
 \subsection{Benchmark}
 
 Using this prototype, we have systematically searched for 12 patterns into 21 models of ecosystems.
-This patterns and models are all originated from various previous works by ecologists, in particular master students who have modeled ecosystems during their internships. The  models are representation of ecosystems from the south of France (Camargue), the Alpes (Chamrousse) and ecosystems in Uganda (Karamoja). The patterns are predation, competition, symbiosis, etc.
-It is out of the scope of this paper to describe them but we would like to pinpoint that they are all patterns and models that ecologists are actually interested in and not artificial examples.
-In particular, we did not include the ``pond'' and ``pesticides'' models in this benchmark because they have been designed to illustrate this paper and have no real ecological interest.
+This patterns and models are all originated from various works performed by ecologists, in particular master students who have modeled contrasted ecosystems. The models are representation of ecosystems from the south of France (Camargue), the Alpes (Chamrousse) and ecosystems in Africa (Uganda, Karamoja). The patterns searched are mainly species interactions such as predation, competition, symbiosis, etc.
+It is out of the scope of this paper to describe these interactions, but we would like to pinpoint that they are all patterns and models that ecologists are actually interested in and not arbitrary examples. 
+In particular, we did not include the ``pond'' and ``pesticides'' models in this benchmark, because they have been designed to illustrate this paper and have no ecological interest.
 For each search, we have defined a timeout of 3~minutes (180~seconds)\footnote{The choice of 3 minutes is arbitrary.} after which Sat4j was interrupted.
 Among the 252 searches resulting from this benchmark, 194 (77\%) returned an optimal solution before the timeout, and 58 (23\%) have been interrupted resulting in a non-optimal solution, as summarized in Figure~\ref{fig:histo}.
 It can be observed that, basically, either an optimal solution is found very quickly, or the search timeouts.
@@ -700,7 +700,7 @@ Moreover, Sat4j is always very fast at finding a solution and most of computatio
  
   \caption{Histogram of search times (in seconds) in the benchmark.}
   \label{fig:histo}
-\end{figure*}
+\end{figure*} 
 
 \begin{figure*}[t!]
   \begin{center}
@@ -755,7 +755,7 @@ From this plot we can draw the following observations:
 \item neither patterns nor models size seem to be the key factor that lead to the significant search time increase. For instance, models \textsf{S} and \textsf{J} have very similar sizes but do not yield similar search times. The same remark applies to patterns \textsf{e} and \textsf{g} to \textsf{j};
 \item however, the shape of the heat-map shows that a key factor lies in patterns as pattern choice may yield a significant increase of search time, while increasing is more progressive with respect to model choice;
 \item for toy models (\textsf{A} to \textsf{F} at the top), the solution is always quickly found;
-\item for large, more detailed, models (\textsf{O} to \textsf{U} at the bottom), the pattern is the key factor to determine if a timeout occurs;
+\item for large, more detailed, models (\textsf{O} to \textsf{U} at the bottom), the pattern structure is the key factor to determine if a timeout occurs;
 \item this is confirmed on intermediary models (\textsf{G} to \textsf{N} in the middle) where we can observe that more searches timeout as we go down the plot and, patterns all have the same size while models are not necessarily ordered by size.
 \end{itemize}
 %
@@ -805,8 +805,7 @@ Conversely, here, we explicitly take into consideration penalties for elements t
 The work in \cite{DIJKMAN2011498} shows how similarities in business process model are linked to the semantic web domain, a survey of which on corresponding metrics can be found in \cite{Euzenat}.   
 
 
-Finally, concerning explicitly the pattern search, the work in \cite{Milo824} has analogous goals. These authors search for patterns by counting the number of occurrences of a given subgraph in 
-specific networks (world wide web, electronic circuits, \dots) and comparing it to the number of occurrences in random generated networks.  
+Finally, concerning explicitly the pattern search, the work in \cite{Milo824} has analogous goals. These authors search for patterns by counting the number of occurrences of a given subgraph in specific networks (world wide web, electronic circuits, \dots) and comparing it to the number of occurrences in random generated networks.  
 This approach is completely  different to ours, as their method applies to graphs while ours applies to  ``hyper-graphs". Moreover, they use techniques from statistics while we do not.
 
 
@@ -820,15 +819,15 @@ This approach is completely  different to ours, as their method applies to graph
 \section{\uppercase{Conclusion and perspectives}}
 \label{sec:conclusion}
 
-In this paper, we have presented a method for automatically comparing and assessing similarity between ecosystems defined as particular kinds of rewriting systems. 
+In this paper, we have presented a method for automatically comparing and assessing similarity between ecosystems defined as specific kinds of rewriting systems. 
 We have defined a scoring function that takes into account not only the number of matching entities and rules, but also the quality of partial mappings between the left and right hand sides of rules. 
 The approach has been successfully applied to the search of known interaction patterns (\ie ecological processes) in models of ecosystems. 
 
-As a matter of fact this work represents a first step towards a more aware approach on ecosystem dynamics. 
+%As a matter of fact this work represents a first step towards an approach more oriented to ecosystem dynamics. 
 The results we have obtained in our benchmark are promising: we quickly obtain optimal solutions for the vast majority of the cases studied. 
 For the remaining ones, we obtain a solution that is not optimal in a short time, but we have no assessment of how far from optimal it is.
 A possible option to solve this issue could be to add ecological information to assess the quality of a match (with a relevance score) closer to the modeler's expectations.  
-In other words, a bigger match is not necessarily a better match. So far, our method searches for bigger matches. When the search is interrupted and yields a sub-optimal solution, a relevance score may help deciding whether it is already a ``good'' match or not.   
+In other words, a bigger match is not necessarily a better match. So far, our method searches for bigger matches. When the search is interrupted and yields to a sub-optimal solution, a relevance score may help deciding whether it is already a ``good'' match or not.   
 In practice, the matching of entities (here, ecosystemic entities) and rules (ecological processes) can be guided by adding additional constraints, such as to:  
  %CG attention aux termes : essayer de mettre partout les mêmes termes, par ex; choisir entre entities et agents, entre method et approach ... 
 \begin{itemize}
