@@ -57,8 +57,8 @@
 
 
 \abstract{
-This paper studies discrete models of ecosystems viewed as collections of interacting living (animals, plants\ldots ) and nonliving entities (air, water, soil\ldots ), whose conditions of appearance/disappearance are controlled by a set of formal rules (i.e. processes). In ecology, it remains today a challenge to identify indirect interactions at play in ecosystem responses. 
-We present a rule-based method allowing to automatically detect patterns (i.e., ecological processes or sets of processes) in  ecosystem. The method relies on a measure of similarity and on an optimization algorithm. 
+In this paper we consider  discrete models of ecosystems viewed as collections of interacting living (animals, plants\ldots ) and nonliving entities (air, water, soil\ldots ), whose conditions of appearance/disappearance are controlled by a set of formal rules (i.e., processes). 
+We present here a rule-based method allowing to compare ecosystems. The method relies on a measure of similarity and on an optimization algorithm. In addition, the proposed method allows to detect patterns (i.e., ecological processes or sets of processes) in  ecosystems. We have validated the method against a set of models and patterns provided by ecologists. 
 }
 
 \onecolumn \maketitle \normalsize \vfill
@@ -68,11 +68,12 @@ We present a rule-based method allowing to automatically detect patterns (i.e., 
 Ecosystems are defined by complex processes of highly different nature: \eg bio-ecological, physico-chemical and socio-economical. 
 The dynamics of such systems is difficult to grasp as it is the result of an intricate interplay between a large number of processes: the functioning of living species (fauna and flora) and the dynamics of soil and climate. 
 In addition, all these entities and processes are influenced and often highly impacted by human activities. 
-%
-Understanding the functioning of ecosystems is, thus, crucial for a more sustainable management of them. 
-Unfortunately, in practice, the study and management models of ecosystems remain a challenge. 
-They are usually developed on a case-by-case basis due to the large number and continuous nature of variables. 
-Here is a critical bottleneck, as we face today fast and dangerous changes of most ecosystems (due to climate change, to human activities\ldots ) that we are compelled to understand so to appropriately react.
+
+Understanding the functioning of ecosystems is thus crucial for a more sustainable management of them.   Indeed, we face today fast and dangerous changes of most ecosystems (due to climate change, to human activities\ldots ) that we are compelled to understand so to appropriately react.
+Unfortunately, in practice, the development and analysis of models of ecosystems remain a challenge and constitutes a critical bottleneck as 
+they are usually treated on a case-by-case basis with few generalizations. 
+
+%------------------------------
 
 One relevant way of improving our understanding of ecosystems functioning  is to provide more formal frameworks. 
 They have proven to be valuable for speeding up and better controlling the decision procedures. 
@@ -94,33 +95,67 @@ As a starting point of our developments we take a general discrete formalism pro
 These rules  may be interpreted as the functioning bricks of landscape modelling. 
 Each rule is, thus, part of a broader process describing the behavior of the whole ecosystem. 
 
-Yet, there are processes that are common to several ecosystems: \eg --for species interactions-- predation, competition, symbiosis\ldots and it is crucial to be able to identify them to qualify the ecosystem under study. Hence, we can raise the following questions: How can we detect whether a process is present in an ecosystem? Is the introduction of a new entity causing the appearance of a known process? 
+Yet, there are processes that are common to several ecosystems: \eg --for species interactions-- predation, competition, symbiosis\ldots  and it is crucial to be able to identify them to better describe the ecosystem under study. Hence, we can raise the following questions: How can we detect whether a given process is present in an ecosystem? Is the introduction of a new entity causing the appearance of a known process? 
 Indeed, to detect wanted or unwanted interaction patterns would guide decisions for taking actions according to the management objectives, such as preventing or reinforcing some ecosystemic processes or states. 
-Identify ecological processes or  \emph{interaction patterns} --in a more computer science oriented terminology--  by employing classical graph-theoretical methods on the state space is ineffective. 
-Indeed, in realistic ecosystem models, the modeled dynamics usually leads to huge state spaces (often hundreds of thousands states). 
+Identify certain ecological processes or  \emph{interaction patterns} --in a more computer science oriented terminology--  by employing classical graph-theoretical methods on the state space is ineffective. 
+Indeed, in realistic ecosystem models, the modeled dynamics usually leads to huge state spaces (often hundreds of thousands of states). 
 It is more efficient to search for patterns by referring only to the (limited) syntactical system specification as similar processes look similar at the rule level.  
 
 From a more general point of view, a pattern search corresponds to a variant of the  problem of assessing the similarity between models of ecosystems. 
 %
-In order to compare two qualitative models of ecosystems, we introduce a pair of mappings, the first identifying entities and the latter rules, and a similarity measure expressed as a scoring function.  
+In order to compare two  models of ecosystems, we introduce a pair of mappings, the first identifying entities and the latter rules, and a similarity measure expressed as a scoring function.  
 This scoring majors the number of matched entities and rules, and penalizes those that do not perfectly match. 
-Similarity is then defined as an optimization problem through the scoring function. The definition of the scoring function is used to search for interaction patterns in the rule-based models of ecosystems. 
+Similarity is then defined as an optimization problem through the scoring function. Indeed, the scoring function with optimal value uniquely determines the mappings of entities and rules. This way the definition of the scoring function is used to search for interaction patterns in the rule-based models of ecosystems. 
 As the complexity of this kind of search is exponential, it is not always possible in realistic cases to find optimal solutions in a reasonable time. 
 Nevertheless, optimization tools generally allow obtaining a sub-optimal solution quite efficiently, solutions that can then be refined. 
 
-We implemented a prototype that allows encoding the matching of two models into a pseudo-Boolean optimization problem and calling tool Sat4j~\cite{sat4j} to solve it. 
-We applied this prototype to systematically match a collection of predefined interaction patterns against a set of models of ecosystems coming from various sources. 
+We implemented a prototype that allows encoding the matching of two models into a pseudo-Boolean optimization problem and invoking tool Sat4j~\cite{sat4j} to solve it. 
+We applied this prototype to systematically match a collection of predefined interaction patterns against a set of models of ``real" ecosystems. 
  
 The paper is structured as follows: Section \ref{sec:ecosystems} introduces the formal modeling of ecosystems we have used and presents running examples. Section \ref{sec:similarity} defines similarity measures used to compare ecosystems and discusses possible extensions of them. 
 Several comparisons between ecosystems are used as illustrations for the scoring function.
 In Section \ref{sec:experiments}, we present the results of our main case study: a search of interaction patterns in realistic ecosystems. 
-Section \ref{sec:related} is devoted to an overview of related work, while some concluding remarks and perspectives are presented in Section \ref{sec:conclusion}.  
+Next section \ref{sec:related} is devoted to an overview of related work, while some concluding remarks and perspectives are presented in Section \ref{sec:conclusion}.  
+
+\section{Related work}
+\label{sec:related}
+
+The model of ecosystems developed in this paper is an instance of the more general family of rewriting systems \cite{Terese03}. 
+Such systems have been shown convenient in formalizing models, in particular for systems biology and chemistry. 
+In these domains, we thus find formalizations that are reminiscent of ours: the Biocham \cite{Fages:2008:FCB:1786698.1786702}, the $\kappa$-calculus \cite{DBLP:journals/tcs/DanosL04}, reaction systems \cite{reactionsystems}, activity networks 
+\cite{toxico2017}, P-systems
+\cite{DBLP:journals/ijfcs/PaunPRS11}
+that describe the evolution of cells and/or molecules applying rewriting rules.
+
+
+Yet, the question of similarity appears rather novel in rewriting systems. In a broader context, it is usually associated to the notion of equivalence. In concurrent systems like ours, equivalences are usually semantics based,  notable examples are partial ordering equivalences, trace equivalence \cite{vanglabbek89}, bisimulation \cite{Sangiorgi:2011:IBC:2103603}, principal transition sequences \cite{DBLP:conf/otm/WangHWWHS10}, etc.  
+These notions are usually explored in theory and tailored to highly abstracted languages, moreover computed with a few existing tools. 
+In practice, we cannot expect to use such approaches on the huge state spaces generated from detailed and realistic (qualitative) models of ecosystems.   
+
+Works that are closer to ours can therefore be found in domains in which models use structural aspects rather than their behaviors. 
+For instance in systems biology, several similarity measures can be found (a good survey summarizing the used techniques may be found in \cite{bbw090}).   
+Technically speaking, these methods include the analysis of similar pathways through a structural approach, namely the search of t-invariants in Petri net models \cite{Baldan2013ComparingMP, DBLP:journals/topnoc/BaldanCGS13, Grafahrend-Belau2008}.
+They also define a similarity score, but our goal and underlying modelling are considerably different.
+
+Another domain that focuses on similarity rates is business process modeling. For instance in \cite{xiao}, the authors evaluate the similarity of Petri nets by comparing the set of structural elements such as places and transition arcs. Similarity is based on rates of identical elements. 
+Instead, our approach is finer-grained and more flexible: the mappings allow different names of entities and rules, and we allow partially matched rules.  
+In \cite{bae}, process-based models are studied and similarity is defined on sets of nodes as the proportion of matched ones. 
+Yet, these authors do not deal with relations between them. Likewise, in \cite{DIJKMAN2011498},  other similarities are explored. In this context the authors still compare structural elements of workflows (\eg sets of nodes), but they allow different kinds of distance measures: string-edit distance, labels synonyms and contextual similarity. 
+The latter measure is the closest to ours, as we consider separately the input (or conditions, the left hand side of a rule) and the output (realization, the right hand side of a rule) of a node.  
+Conversely, here, we  take into consideration penalties for elements that are not matched. 
+The work in \cite{DIJKMAN2011498} shows how similarities in business process model are linked to the semantic web domain, a survey of which on corresponding metrics can be found in \cite{Euzenat}.   
+
+
+Finally, concerning explicitly the pattern search, the work in \cite{Milo824} has analogous goals. These authors search for patterns by counting the number of occurrences of a given subgraph in specific networks (world wide web, electronic circuits, \dots) and comparing it to the number of occurrences in random generated networks.  
+This approach is completely  different to ours, as their method applies to graphs while ours applies to  ``hyper-graphs". Moreover, they use techniques from statistics while we do not.
+
+
 
 
 \section{\uppercase{Modeled Ecosystems}}
 \label{sec:ecosystems}
 In this section, we recall the formal definition of a model of an ecosystem as given in \cite{pommereau-gaucherel2017}. 
-An ecosystem consists in a set of \emph{entities} \E that can be present (\On) or absent (\Off). We assume that no entity may be simultaneously \On and \Off. The status (the presence) of an entity $a$ is called polarity, we use $a+$ to denote that $a$ is \On, $a-$ to denote that $a$ is \Off. The set of entities $\E$ with polarities $\mathsf{p} \in \{+,-\}$ is $\Ap= \{a+, a- \mid a \in \E\}.$ 
+An ecosystem consists of a set of \emph{entities} \E that can be present (\On) or absent (\Off). We assume that no entity may be simultaneously \On and \Off. The status (the presence) of an entity $a$ is called polarity, we use $a+$ to denote that $a$ is \On, $a-$ to denote that $a$ is \Off. The set of entities $\E$ with polarities $\mathsf{p} \in \{+,-\}$ is $\Ap= \{a+, a- \mid a \in \E\}.$ 
 The presence of those entities is regulated by a sets of rewriting \emph{rules} \Ru.
 More formally:
 
@@ -273,7 +308,7 @@ rules:&\\
 We may observe that there is a syntactical ``similarity" between rules 4 and 5 in the pond ecosystems and rules 1 and 2 in the predation pattern.
 
 The concept of similarity will be the basis of our investigation.
-Similarity  is discussed in theory (see for instance the philosophical work in \cite{tversky}) and also used in practice: in law \cite{Mooiman}, in nature sciences \cite{bbw090} and in 
+Similarity  is discussed in theory (see for instance the philosophical work in \cite{tversky}) and also used in practice: in law \cite{Mooiman}, in natural sciences \cite{bbw090} and in 
 various branches of computer science. 
 Intuitively, we express it in terms of how many  groups of components with the same roles are present in both ecosystems.
 %FP: isomorphes comment ? 
@@ -362,7 +397,7 @@ $$
 \end{figure*}
 
 
-Similarly, the mapping $\maprule: \Ru_1 \to \Ru_2$ maps the rules. As for entities, it is encoded as a rectangular matrix $Y$ of size $(|\Ru_1| \times |\Ru_2|)$ of Boolean values defined for each pair of rules $(u,v)\in \Ru_1 \times \Ru_2$  as
+Likewise, the mapping $\maprule: \Ru_1 \to \Ru_2$ maps the rules. Similarly as for entities, it is encoded as a rectangular matrix $Y$ of size $(|\Ru_1| \times |\Ru_2|)$ of Boolean values defined for each pair of rules $(u,v)\in \Ru_1 \times \Ru_2$  as
 $$Y_{u,v} =1 \text{ if } \maprule(u)=v, 0 \text{ otherwise.}$$
 It is subjected to the following restrictions that implements injectivity (see Figure \ref{fig:matrix-matchrule}):\looseness=-1
 \begin{enumerate}
@@ -673,44 +708,14 @@ This tool performs the following steps that use the definition of scoring functi
 \item Read  models $\mathcal{E}_1$ of the pattern and
   $\mathcal{E}_2$ of the ecosystem in which the pattern is searched for.
 \item Build the variables in matrices $X$ and $Y$, and the scoring function
-  $S(X,Y)$.
+  $S(X,Y)$ as explained in the previous section.
 \item Encode $S(X,Y)$ into a pseudo-Boolean optimization (PBO) problem following the requirements of the \emph{competitions of pseudo-Boolean solvers}~\cite{opb-format,pb16}.
-\item Call a PBO solver and extract its solution which can be interpreted back as a matching of the variables in~$X$ and~$Y$.
+\item Call a PBO solver and extract its solution. The solution can be interpreted back as the mappings of entities and rules that gives the best score.
 \end{enumerate}
 %
 As  PBO solver, we have used Sat4j that appears to be quite fast and can be interrupted during its computation, in which case it proposes the best solution found so far.
 This is a very nice feature considering that searching for an optimal solution may be very long while non-optimal solutions may already correspond to interesting matches for the modeler.
-The prototype itself was implemented in Python using SymPy~\cite{sympy} to build the scoring function in the most natural way (\ie as defined in the paper), and simplify it latter to match the constraints of PBO format.
-
-\subsection{Benchmark}
-
-Using this prototype, we have systematically searched for 12 patterns into 21 models of ecosystems.
-This patterns and models are all originated from various works performed by ecologists, in particular master students who have modeled contrasted ecosystems. The models are representation of ecosystems from the south of France (Camargue), the Alpes (Chamrousse) and ecosystems in Africa (Uganda, Karamoja). The patterns searched are mainly species interactions such as predation, competition, symbiosis, etc.
-It is out of the scope of this paper to describe these interactions, but we would like to pinpoint that they are all patterns and models that ecologists are actually interested in and not arbitrary examples. 
-In particular, we did not include the ``pond'' and ``pesticides'' models in this benchmark, because they have been designed to illustrate this paper and have no ecological interest.
-For each search, we have defined a timeout of 3~minutes (180~seconds)\footnote{The choice of 3 minutes is arbitrary.} after which Sat4j was interrupted.
-Among the 252 searches resulting from this benchmark, 194 (77\%) returned an optimal solution before the timeout, and 58 (23\%) have been interrupted resulting in a non-optimal solution, as summarized in Figure~\ref{fig:histo}.
-It can be observed that, basically, either an optimal solution is found very quickly, or the search timeouts.
-Moreover, Sat4j is always very fast at finding a solution and most of computation time is dedicated to search for a better solution until an optimal one is found.
-
-\begin{figure*}[t]
-  \begin{center}
-    \includegraphics[width=0.6\textwidth]{histogram}
-  \end{center}
- 
-  \caption{Histogram of search times (in seconds) in the benchmark.}
-  \label{fig:histo}
-\end{figure*} 
-
-\begin{figure*}[t!]
-  \begin{center}
-    \includegraphics[width=0.6\textwidth]{heatmap}
-  \end{center}
- % \vspace*{-1mm}
-  \caption{Search times (in seconds) with respect to models and patterns. Models are indicated with an upper-case letter,  patterns with a lower-case letter.
- Model and pattern names are followed by pairs of numbers $e/r$: $e$ is the number of entities and $r$ the number of rules.}
-  \label{fig:heatmap}
-\end{figure*}
+The prototype itself was implemented in Python using SymPy~\cite{sympy} to build the scoring function as defined above and simplified  to match the constraints of the PBO format.
 
 \begin{figure}[t]
 \begin{small}
@@ -744,6 +749,42 @@ R2: Su+ >> P-   ==>  R5: R+ >> Pe-
 \label{fig:run}
 \end{figure}
 
+This is illustrated in Figure~\ref{fig:run} where we see how our prototype executes on the ecosystems from Examples \ref{ex:pond} and \ref{ex:pests}: it prints the values of the scoring function as soon as Sat4j finds them. At any time, it is possible to kill Sat4j which interrupts its computation and force it to print the best solution it has discovered so far.
+It is interesting to note that this solution corresponds to none of those proposed in Example~\ref{ex:similarity} which are all matches that have been crafted manually and corresponded to our intuition about the two models. So, this shows that our method is able to propose something new, \ie something that a modeler would not necessarily imagine even on small examples.
+
+
+
+\subsection{Benchmark}
+
+Using this prototype, we have systematically searched for 12 patterns into 21 models of ecosystems.
+These patterns and models are all originated from various works performed by ecologists, in particular master students who have modeled contrasted ecosystems. The models are representation of ecosystems from the south of France (Camargue), the Alpes (Chamrousse) and ecosystems in Africa (Uganda, Karamoja). The patterns searched are mainly species interactions such as predation, competition, symbiosis, etc.
+It is out of the scope of this paper to describe these interactions, but we would like to pinpoint that they are all patterns and models that ecologists are actually interested in and not arbitrary examples. 
+In particular, we did not include the ``pond'' and ``pesticides'' models in this benchmark, because they have been designed to illustrate this paper and have no ecological interest.
+For each search, we have defined a timeout of 3~minutes (180~seconds)\footnote{The choice of 3 minutes is arbitrary.} after which Sat4j was interrupted.
+Among the 252 searches resulting from this benchmark, 194 (77\%) returned an optimal solution before the timeout, and 58 (23\%) have been interrupted resulting in a non-optimal solution, as summarized in Figure~\ref{fig:histo}. Even if the search time is short, we can observe that an optimal solution is found in most cases. For the other ones a solution, even if not optimal, is found anyway.
+
+
+\begin{figure*}[t]
+  \begin{center}
+    \includegraphics[width=0.7\textwidth]{histogram}
+  \end{center}
+ 
+  \caption{Histogram of search times (in seconds) in the benchmark.}
+  \label{fig:histo}
+\end{figure*} 
+
+\begin{figure*}[t!]
+  \begin{center}
+    \includegraphics[width=0.6\textwidth]{heatmap}
+  \end{center}
+ % \vspace*{-1mm}
+  \caption{Search times (in seconds) with respect to models and patterns. Models are indicated with an upper-case letter,  patterns with a lower-case letter.
+ Model and pattern names are followed by pairs of numbers $e/r$: $e$ is the number of entities and $r$ the number of rules.}
+  \label{fig:heatmap}
+\end{figure*}
+
+
+
 
 A more detailed view of this benchmark is provided in the ``heat-map'' depicted in Figure~\ref{fig:heatmap} that shows for each pattern and each model a color corresponding to the search time.
 In this heat-map, models are named with an upper-case letter, and patterns with a lower-case letter; names are followed by pairs of numbers $e/r$ where $e$ is the number of entities and $r$ the number of rules in the model or pattern.
@@ -761,59 +802,17 @@ From this plot we can draw the following observations:
 %
 So far, we have not identified what is the key factor that forbids a quick search.
 For sure pattern size is a factor as we can see for patterns \textsf{k} and \textsf{l} (or models \textsf{O} to \textsf{U}), but what we observe from patterns \textsf{g}---\textsf{j} and models \textsf{F}---\textsf{L} shows that this is not the only aspect.
-Considering our scoring function, search time is probably linked to the size of rules in the pattern and in the model, but this question will deserve further work to examine more in depths the characteristics of patterns that lead to these observed increasings of search times.
+Considering our scoring function, search time is probably linked to the size of rules in the pattern and in the model, but this question will deserve further work to examine more in depths the characteristics of patterns that lead to the observed increasing of search times.
 
 
 
 As a conclusion of this benchmark, we observe that searching a pattern in a model is always possible, usually in a very short time.
 Moreover, in every case, a solution has been found quickly, which allows the user to interrupt the search very soon and yet get a match that is not optimal with respect to the scoring function but may be interesting already.
-This is illustrated in Figure~\ref{fig:run} where we see how our prototype executes on the ecosystems from Examples \ref{ex:pond} and \ref{ex:pests}: it prints the values of the scoring function as soon as Sat4j finds them. At any time, it is possible to kill Sat4j which interrupts its computation and force it to print the best solution it has discovered so far.
-It is interesting to note that this solution corresponds to none of those proposed in Example~\ref{ex:similarity} which are all matches that have been crafted manually and corresponded to our intuition about the two models. So, this shows that our method is able to propose something new, \ie something that a modeler would not necessarily imagine even on small examples.
-
 
 
 A future extension of the implementation would be to enable re-injecting found matches in the PBO problem as negative constraints, in order to forbid the search to find them again. 
 In addition, this would give a way to enumerate matches.  
 It is indeed particularly relevant for ecologists to (automatically) identify several instances of the same interaction pattern (ecological processes) in the ecosystem dynamics under study. 
-
-\section{Related work}
-\label{sec:related}
-
-The model of ecosystems developed in this paper is an instance of the more general family of rewriting systems \cite{Terese03}. 
-Such systems have been shown convenient in formalizing models, in particular for systems biology and chemistry. 
-In these domains, we thus find formalizations that are reminiscent of ours: the Biocham \cite{Fages:2008:FCB:1786698.1786702}, the $\kappa$-calculus \cite{DBLP:journals/tcs/DanosL04}, reaction systems \cite{reactionsystems}, activity networks 
-\cite{toxico2017}, P-systems
-\cite{DBLP:journals/ijfcs/PaunPRS11}
-that describe the evolution of cells and/or molecules applying rewriting rules.
-
-
-Yet, the question of similarity appears rather novel in rewriting systems. In a broader context, it is usually associated to the notion of equivalence. In concurrent systems like ours, equivalences are usually semantics based,  notable examples are partial ordering equivalences, trace equivalence \cite{vanglabbek89}, bisimulation \cite{Sangiorgi:2011:IBC:2103603}, principal transition sequences \cite{DBLP:conf/otm/WangHWWHS10}, etc.  
-These notions are usually explored in theory and tailored to highly abstracted languages, moreover computed with a few existing tools. 
-In practice, we cannot expect to use such approaches on the huge state spaces generated from detailed and realistic (qualitative) models of ecosystems.   
-
-Works that are closer to ours can therefore be found in domains in which models use structural aspects rather than their behaviors. 
-For instance in systems biology, several similarity measures can be found (a good survey summarizing the used techniques may be found in \cite{bbw090}).   
-Technically speaking, these methods include the analysis of similar pathways through a structural approach, namely the search of t-invariants in Petri net models \cite{Baldan2013ComparingMP, DBLP:journals/topnoc/BaldanCGS13, Grafahrend-Belau2008}.
-They also define a similarity score, but our goal and underlying model are considerably different.
-
-Another domain that focuses on similarity rates is business process modeling. For instance in \cite{xiao}, the authors evaluate the similarity of Petri nets by comparing the set of structural elements such as places and transition arcs. Similarity is based on rates of identical elements. 
-Instead, our approach is finer-grained and more flexible: the mappings allow different names of entities and rules, and we allow partially matched rules.  
-In \cite{bae}, process-based models are studied and similarity is defined on sets of nodes as the proportion of matched ones. 
-Yet, these authors do not deal with relations between them. Likewise, in \cite{DIJKMAN2011498},  other similarities are explored. In this context the authors still compare structural elements of workflows (\eg sets of nodes), but they allow different kinds of distance measures: string-edit distance, labels synonyms and contextual similarity. 
-The latter measure is the closest to ours, as we consider separately the input (or conditions, the left hand side of a rule) and the output (realization, the right hand side of a rule) of a node.  
-Conversely, here, we explicitly take into consideration penalties for elements that are not matched. 
-The work in \cite{DIJKMAN2011498} shows how similarities in business process model are linked to the semantic web domain, a survey of which on corresponding metrics can be found in \cite{Euzenat}.   
-
-
-Finally, concerning explicitly the pattern search, the work in \cite{Milo824} has analogous goals. These authors search for patterns by counting the number of occurrences of a given subgraph in specific networks (world wide web, electronic circuits, \dots) and comparing it to the number of occurrences in random generated networks.  
-This approach is completely  different to ours, as their method applies to graphs while ours applies to  ``hyper-graphs". Moreover, they use techniques from statistics while we do not.
-
-
-
-
-
-
-
 
 
 \section{\uppercase{Conclusion and perspectives}}
