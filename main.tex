@@ -44,7 +44,7 @@
 \begin{document}
 
 %
-\title{Pattern Matching in discrete Models for Ecosystem Ecology}
+\title{Pattern Matching in Qualitative Models for Ecosystem Ecology}
 
 \author{\authorname{Cinzia Di Giusto\sup{1}, Cédric Gaucherel\sup{2}, Hanna Klaudel\sup{3} and Franck Pommereau \sup{3}}
 \affiliation{\sup{1}Université Côte d'Azur,  CNRS, I3S, France}
@@ -57,8 +57,8 @@
 
 
 \abstract{
-In this paper we consider  discrete models of ecosystems viewed as collections of interacting living (animals, plants\ldots ) and nonliving entities (air, water, soil\ldots ), whose conditions of appearance/disappearance are controlled by a set of formal rules (i.e., processes). 
-We present here a rule-based method allowing to compare ecosystems. The method relies on a measure of similarity and on an optimization algorithm. In addition, the proposed method allows to detect patterns (i.e., ecological processes or sets of processes) in  ecosystems. We have validated the method against a set of models and patterns provided by ecologists. 
+In this paper we consider discrete qualitative models of ecosystems viewed as collections of interacting living (animals, plants\ldots ) and nonliving entities (air, water, soil\ldots ), whose conditions of appearance/disappearance are controlled by a set of formal rules (i.e., processes). 
+We present here a rule-based method allowing to compare ecosystems. The method relies on a measure of similarity and on an optimization algorithm. In addition, the proposed method allows to detect patterns (i.e., ecological processes or sets of processes) in  ecosystems. We have validated the method by applying it against a set of models and patterns provided by ecologists. 
 }
 
 \onecolumn \maketitle \normalsize \vfill
@@ -81,17 +81,18 @@ They have proven to be valuable for speeding up and better controlling the decis
 Similarly to what happens in biology, ordinary differential equations (ODE) are the dominant modeling methodology for ecosystems \cite{may72, Lotka1925}. 
 The drawbacks of such  models are that: i) they usually need to quantify various parameters (mostly unknown). ii) They are not able to faithfully represent the time scale required for observation of ecological processes which is usually large. 
 iii) On top of this,   analytic solutions usually do not exist and models often represent averaged and sometimes unrealistic behaviors of ecosystems. 
-In contrast, while discrete models are high level abstractions of observed processes, they allow unraveling the tangled causal relationships between system's entities (i.e. material constitutive components). 
-The success of discrete approaches is witnessed, for instance,  in systems biology with formalisms like Petri
+In contrast, while discrete qualitative models are high level abstractions of observed processes, they allow unraveling the tangled causal relationships between system's entities (i.e. material constitutive components). 
+The success of discrete qualitative approaches is witnessed, for instance,  in systems biology with formalisms like Petri
  nets~\cite{DBLP:journals/nc/BaldanCMS10}, Boolean networks~\cite{thomas1973boolean},
  process algebras~\cite{journals/tcsb/Cardelli05} and rewriting systems~\cite{giavitto04a}, to cite a few. 
 
-In ecology, discrete modelling is still pioneering and under exploited. 
+In ecology, discrete qualitative modelling is still pioneering and under exploited. 
 Approaches such as \cite{gaucherel2012,gaucherel2014}, where the authors study the driving rules needed to change agricultural mosaics and model contrasted landscapes, are promising. However, much more may be obtained
 by developing original solutions based on the suitable application of existing theory and associated (automated) tools. 
 One of the goals of this paper is to contribute in this regard. 
 
-As a starting point of our developments we take a general discrete formalism proposed in   \cite{pommereau-gaucherel2017}. Ecosystems are modeled qualitatively as a set of (living and nonliving) entities together with a set of rewriting rules expressing the conditions of their appearance/disappearance (\ie the ecosystem component responses).  
+As a starting point of our developments we take a general discrete qualitative formalism proposed in   \cite{pommereau-gaucherel2017}. Ecosystems are modeled 
+as a set of (living and nonliving) entities together with a set of rewriting rules expressing the conditions of their appearance/disappearance (\ie the ecosystem component responses).  
 These rules  may be interpreted as the functioning bricks of landscape modelling. 
 Each rule is, thus, part of a broader process describing the behavior of the whole ecosystem. 
 
@@ -124,7 +125,7 @@ The model of ecosystems developed in this paper is an instance of the more gener
 Such systems have been shown convenient in formalizing models, in particular for systems biology and chemistry. 
 In these domains, we thus find formalizations that are reminiscent of ours: the Biocham \cite{Fages:2008:FCB:1786698.1786702}, the $\kappa$-calculus \cite{DBLP:journals/tcs/DanosL04}, reaction systems \cite{reactionsystems}, activity networks 
 \cite{toxico2017}, P-systems
-\cite{DBLP:journals/ijfcs/PaunPRS11}
+\cite{DBLP:journals/ijfcs/PaunPRS11}, cellular automata \cite{gaucherel2006,agnihotri15}
 that describe the evolution of cells and/or molecules applying rewriting rules.
 
 
